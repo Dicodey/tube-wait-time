@@ -19,14 +19,13 @@ export function useTflArrivals() {
                 }
                 const data = await response.json();
 
-                // Filter for Northbound trains (checking platformName)
-                // IMPORTANT: The API sometimes marks Southbound Morden trains as 'inbound' too.
-                // We must rely on 'Northbound' in platform name and explicitly exclude Morden.
+                // Filter for Northbound trains (towards Balham)
+                // "Outbound" from Tooting Bec is Northbound (away from Morden).
                 const northbound = data
                     .filter(train => {
-                        const isNorthbound = train.platformName.includes('Northbound');
-                        const isNotMorden = train.destinationName !== 'Morden Underground Station';
-                        return isNorthbound && isNotMorden;
+                        const isOutbound = train.direction === 'outbound' || train.platformName.includes('Northbound');
+                        const isNotMorden = !train.destinationName.includes('Morden');
+                        return isOutbound && isNotMorden;
                     })
                     .sort((a, b) => a.timeToStation - b.timeToStation);
 

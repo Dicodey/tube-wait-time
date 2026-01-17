@@ -5,11 +5,7 @@ export function ArrivalsBoard({ arrivals, loading, error }) {
     if (error) return <div className="error">Signal Failure: {error}</div>;
     if (arrivals.length === 0) return <div className="loading">No trains due</div>;
 
-    const WALK_TIME_SECONDS = 12 * 60;
-
-    // Filter trains that depart before we can get there (12 mins)
-    const reachableTrains = arrivals.filter(train => train.timeToStation >= WALK_TIME_SECONDS);
-    const nextTrains = reachableTrains.slice(0, 5); // Show next 5 reachable trains
+    const nextTrains = arrivals.slice(0, 5);
 
     return (
         <div className="board">
@@ -27,13 +23,10 @@ export function ArrivalsBoard({ arrivals, loading, error }) {
                 // Ensure "Charing Cross" is used instead of "CX"
                 destination = destination.replace('via CX', 'via Charing Cross');
 
-                // Adjust time for walking
-                const adjustedTime = train.timeToStation - WALK_TIME_SECONDS;
-
                 return (
                     <div key={train.id} className="arrival-row">
                         <span className="destination">{destination}</span>
-                        <span className="time">{formatTime(adjustedTime)}</span>
+                        <span className="time">{formatTime(train.timeToStation)}</span>
                     </div>
                 );
             })}
