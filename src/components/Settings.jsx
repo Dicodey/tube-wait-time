@@ -51,6 +51,13 @@ export function Settings({ onSettingsChange, currentSettings }) {
         setIsOpen(false);
     };
 
+    const handleReset = () => {
+        setSelectedLine('northern');
+        setSelectedStation('940GZZLUTBC');
+        setSelectedDirection('outbound');
+        setSelectedOffset(0);
+    };
+
     // Get direction options for the selected line
     const directionOptions = getAvailableDirections(selectedLine);
 
@@ -124,8 +131,9 @@ export function Settings({ onSettingsChange, currentSettings }) {
                         </div>
 
                         <div className="settings-actions">
-                            <button onClick={handleSave}>Save</button>
-                            <button onClick={() => setIsOpen(false)}>Cancel</button>
+                            <button className="save-btn" onClick={handleSave}>Save</button>
+                            <button className="reset-btn" onClick={handleReset}>Reset Defaults</button>
+                            <button className="cancel-btn" onClick={() => setIsOpen(false)}>Cancel</button>
                         </div>
                     </div>
                 </div>
