@@ -42,17 +42,29 @@ export function Settings({ onSettingsChange, currentSettings }) {
                         });
                     });
 
-                    // Fallback to alphabetical 'stations' list if sequences is empty
-                    if (orderedStations.length === 0 && data.stations) {
-                        setStations(data.stations.map(s => ({ id: s.id, name: s.name })));
-                    } else {
+                    if (orderedStations.length > 0) {
                         setStations(orderedStations);
+                        setLoading(false);
+                    } else {
+                        // If no sequence found, fall back to simple alphabetical list
+                        // This handles cases where 'outbound' might be invalid for a line
+                        throw new Error('No sequence data found');
                     }
-                    setLoading(false);
                 })
                 .catch(err => {
-                    console.error('Failed to fetch stations:', err);
-                    setLoading(false);
+                    console.warn('Failed to fetch sequence, falling back to simple list:', err);
+                    // Fallback fetch
+                    fetch(`https://api.tfl.gov.uk/Line/${selectedLine}/StopPoints`)
+                        .then(r => r.json())
+                        .then(data => {
+                            setStations(data.map(s => ({ id: s.id, name: s.commonName })).sort((a, b) => a.name.localeCompare(b.name)));
+                            setLoading(false);
+                        })
+                        .catch(e => {
+                            console.error('Critical failure fetching stations:', e);
+                            setLoading(false);
+                            setStations([]);
+                        });
                 });
         }
     }, [selectedLine]);
