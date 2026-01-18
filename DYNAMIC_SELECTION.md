@@ -61,7 +61,7 @@ I've successfully implemented dynamic station selection for your Tube Wait Time 
 To deploy these changes to your live site, run:
 
 ```bash
-cd /Users/diderik/Documents/Antigravity/tube-wait-time && npm run publish
+cd /Users/diderik/Developer/Antigravity/tube-wait-time && npm run publish
 ```
 
 This will commit the changes, push to GitHub, and deploy to GitHub Pages!
