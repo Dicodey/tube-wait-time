@@ -25,10 +25,29 @@ export function Settings({ onSettingsChange, currentSettings }) {
     useEffect(() => {
         if (selectedLine) {
             setLoading(true);
-            fetch(`https://api.tfl.gov.uk/Line/${selectedLine}/StopPoints`)
+            fetch(`https://api.tfl.gov.uk/Line/${selectedLine}/Route/Sequence/outbound`)
                 .then(r => r.json())
                 .then(data => {
-                    setStations(data.map(s => ({ id: s.id, name: s.commonName })));
+                    // Extract stations from stopPointSequences to get them in order
+                    const sequences = data.stopPointSequences || [];
+                    const orderedStations = [];
+                    const seenIds = new Set();
+
+                    sequences.forEach(seq => {
+                        seq.stopPoint.forEach(stop => {
+                            if (!seenIds.has(stop.id)) {
+                                seenIds.add(stop.id);
+                                orderedStations.push({ id: stop.id, name: stop.name });
+                            }
+                        });
+                    });
+
+                    // Fallback to alphabetical 'stations' list if sequences is empty
+                    if (orderedStations.length === 0 && data.stations) {
+                        setStations(data.stations.map(s => ({ id: s.id, name: s.name })));
+                    } else {
+                        setStations(orderedStations);
+                    }
                     setLoading(false);
                 })
                 .catch(err => {
