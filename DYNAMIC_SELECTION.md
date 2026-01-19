@@ -2,7 +2,7 @@
 
 ## What's New
 
-I've successfully implemented dynamic station selection for your Tube Wait Time app! Users can now:
+I've successfully implemented dynamic station selection for your Dipartures app! Users can now:
 
 1. **Change the tube line** - Select from all 11 London Underground lines
 2. **Pick any station** - Choose from all stations on the selected line
@@ -11,7 +11,7 @@ I've successfully implemented dynamic station selection for your Tube Wait Time 
 
 ## How to Test
 
-1. Open http://localhost:5173/tube-wait-time/ in your browser
+1. Open http://localhost:5173/Dipartures/ in your browser
 2. Click the **⚙️ Change Station** button in the top-right corner
 3. A modal will appear with three dropdowns:
    - **Tube Line**: Select any line (e.g., Victoria, Central, Piccadilly)
@@ -61,7 +61,7 @@ I've successfully implemented dynamic station selection for your Tube Wait Time 
 To deploy these changes to your live site, run:
 
 ```bash
-cd /Users/diderik/Developer/Antigravity/tube-wait-time && npm run publish
+cd /Users/diderik/Developer/Antigravity/Dipartures && npm run publish
 ```
 
 This will commit the changes, push to GitHub, and deploy to GitHub Pages!

@@ -1,4 +1,4 @@
-# Tube Wait Time Web App
+# Dipartures
 
 A React web application that displays real-time Northern Line arrival times for **Tooting Bec** station in a dot-matrix style.
 
@@ -14,7 +14,7 @@ A React web application that displays real-time Northern Line arrival times for 
 1.  **Prerequisites**: Ensure you have Node.js installed.
 2.  **Navigate to the folder**:
     ```bash
-    cd tube-wait-time
+    cd Dipartures
     ```
 3.  **Install Dependencies** (first time only):
     ```bash
